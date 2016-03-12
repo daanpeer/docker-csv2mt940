@@ -4,6 +4,5 @@
 To run this image:
 
 ```
-$ docker build -t my-php-app .
-$ docker run -d --name my-running-app my-php-app
+$ docker run --rm -p 8080:80 mpepping/docker-csv2mt940
 ```

@@ -1,9 +1,6 @@
 <?php
 class CsvParser
 
-# "Datum","Naam / Omschrijving","Rekening","Tegenrekening","Code","Af Bij","Bedrag (EUR)","MutatieSoort","Mededelingen"
-# "YYYYMMDD", Naam,"NL87INGB0006473786","NL85INGB0654416265"
-# "20160308","Transip B.V.","NL87INGB0006473786","NL85INGB0654416265","IC","Af","10,88","Incasso","Europese Incasso, doorlopend IBAN: NL85INGB0654416265 BIC: INGBNL2A Naam: Transip B.V. ID begunstigde: NL39ZZZ243458990000 SEPA ID machtiging: MANDATE-NL-21572-1 Kenmerk: E2E-ID-NL-200402179 Omschrijving: FACTUUR F0000.2016.0013.9964"
 
 {
 	public function parse($csv)

@@ -17,33 +17,32 @@ if ((($_FILES["file"]["type"] == "text/plain")
 	|| ($_FILES["file"]["type"] == "text/csv"))
 	&& ($_FILES["file"]["size"] < 2000000)
 	&& in_array($extension, $allowedExts)) {
-  
+
 		if ($_FILES["file"]["error"] > 0) {
 			echo "Error: " . $_FILES["file"]["error"] . "<br>";
 		} else {
-			//echo "Upload: " . $_FILES["file"]["name"] . "<br>";
-			//echo "Type: " . $_FILES["file"]["type"] . "<br>";
-			//echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
-			//echo "Stored in: " . $_FILES["file"]["tmp_name"];
-			
+			echo "Upload: " . $_FILES["file"]["name"] . "<br>";
+			echo "Type: " . $_FILES["file"]["type"] . "<br>";
+			echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
+			echo "Stored in: " . $_FILES["file"]["tmp_name"];
+
 			$mt940 = '';
 
 			$csvParser = new CsvParser();
 			$transactions = $csvParser->parse($_FILES["file"]["tmp_name"]);
-			
+
 			if($transactions) {
 				$mt940Generator = new MT940Generator();
 				$mt940 = $mt940Generator->generate($transactions);
-				
+
 				header('Content-disposition: attachment; filename=mutaties.940');
 				header('Content-type: text/plain');
-				
+
 				echo $mt940;
 				exit();
-			}	
+			}
 		}
 } else {
 	echo "Invalid file";
 	var_dump($_FILES);
 }
-	

@@ -1,5 +1,6 @@
 # docker-csv2mt940
 
+Convert bankaccount exported CSV-files to the MT940 format.
 
 To run this image:
 

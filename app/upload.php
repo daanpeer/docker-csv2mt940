@@ -1,6 +1,6 @@
 <?php
 
-if( !is_uploaded_file($_FILES['inputfile']['tmp_name']) ) 
+if( !is_uploaded_file($_FILES['inputfile']['tmp_name']) )
 {
     header("Location: index.php");
     exit();
@@ -8,7 +8,7 @@ if( !is_uploaded_file($_FILES['inputfile']['tmp_name']) )
 
 $filename = sha1_file($_FILES['inputfile']['tmp_name']);
 
-if (!move_uploaded_file( 
+if (!move_uploaded_file(
  	$_FILES['inputfile']['tmp_name'],
     sprintf('./uploads/%s', $filename)
 )) {
@@ -34,20 +34,20 @@ $mt940_footer = "
 
 $row = 0;
 if (($handle = fopen( dirname(__FILE__) . "/uploads/".$filename, "r")) !== FALSE) {
-    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {        
+    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
         $row++;
         if ( $row == 1 ) continue;
-        if ( $row == 2 ) 
+        if ( $row == 2 )
     	{
     		$mt940 = sprintf(
     			$mt940_header,
     			$data[2] . "EUR", // :25 - Rekeningidentificatie
     			"C" . date("ymd", strtotime($data[0])) . "EUR0,00" // :60F
-			);      
+			);
     	}
 
         $mt940 .= sprintf(
-        	$mt940_template,    
+        	$mt940_template,
         	date("ymd", strtotime($data[0])) . date("md", strtotime($data[0])) . ( ($data[5] == "Bij") ? "C" : "D" ) . $data[6] . "NTRFEREF//0000000000100".$row."\n/TRCD/00100/", // :61
         	"/CNTP/".$data[3]."/////REMI/USTD//".$data[8]."/"
         	);
@@ -66,5 +66,5 @@ $mt940 .= $mt940_footer;
 
 header("Content-type: application/octet-stream;");
 header("Content-transfer-encoding: Binary;");
-header("Content-disposition: attachment; filename=\"" . basename($_FILES['inputfile']['name']) . ".STA" . "\"");
+header("Content-disposition: attachment; filename=\"" . basename($_FILES['inputfile']['name']) . ".940" . "\"");
 echo $mt940;
